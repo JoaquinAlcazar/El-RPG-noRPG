@@ -2,21 +2,21 @@ using UnityEngine;
 
 public class ThirdPersonCamera : MonoBehaviour
 {
-    public Transform target;         // El personaje o el punto de enfoque
+    public Transform target;         
     public Vector3 thirdPersonOffset = new Vector3(0.5f, -4f, -1.5f);
-    public Vector3 firstPersonOffset = new Vector3(0f, 0f, 0.15f); // solo ligeramente delante del CameraTarget
+    public Vector3 firstPersonOffset = new Vector3(0f, 0f, 0.15f); 
     public float transitionSpeed = 5f;
 
     private Vector3 currentOffset;
 
     public float rotationSpeed = 5f;
-    public float minY = -35f;        // Límite inferior de rotación vertical
-    public float maxY = 90f;         // Límite superior de rotación vertical
+    public float minY = -35f;        
+    public float maxY = 90f;  
 
     private float currentX = 0f;
     private float currentY = 0f;
 
-    private bool aiming = false;  // Para verificar si estamos en modo primera persona
+    private bool aiming = false; 
 
     void Start()
     {
@@ -27,22 +27,20 @@ public class ThirdPersonCamera : MonoBehaviour
 
     void Update()
     {
-        // Detectar el cambio de cámara (clic derecho)
         bool newAiming = Input.GetMouseButton(1);
         if (newAiming != aiming)
         {
             aiming = newAiming;
 
-            // Si cambiamos de vista, reiniciamos la rotación de la cámara
             if (aiming)
             {
-                currentX = 0f;  // Reiniciar rotación X (horizontal)
-                currentY = 0f;  // Reiniciar rotación Y (vertical)
+                currentX = 0f;  
+                currentY = 0f;  
             }
         }
 
-        // Actualizamos las rotaciones basadas en el movimiento del ratón
-        if (!aiming) // Solo actualizamos la rotación cuando estamos en tercera persona
+        
+        if (!aiming) 
         {
             currentX += Input.GetAxis("Mouse X") * rotationSpeed;
             currentY -= Input.GetAxis("Mouse Y") * rotationSpeed;
@@ -61,11 +59,11 @@ public class ThirdPersonCamera : MonoBehaviour
 
         if (aiming)
         {
-            transform.rotation = rotation;  // En primera persona, aplicamos la rotación de la cámara
+            transform.rotation = rotation;  
         }
         else
         {
-            transform.LookAt(target.position + Vector3.up * 1.5f); // En tercera persona, miramos al personaje
+            transform.LookAt(target.position + Vector3.up * 1.5f); 
         }
     }
 

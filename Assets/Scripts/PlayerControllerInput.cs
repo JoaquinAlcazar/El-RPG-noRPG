@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(CharacterController))]
+
 public class PlayerControllerInput : MonoBehaviour
 {
     [SerializeField] private ThirdPersonCamera cameraScript;
@@ -19,6 +20,9 @@ public class PlayerControllerInput : MonoBehaviour
 
     private PlayerControls controls;
 
+    private Animator animator;
+    private CharacterController characterController;
+
     void Awake()
     {
         controls = new PlayerControls();
@@ -29,6 +33,8 @@ public class PlayerControllerInput : MonoBehaviour
         controls.Gameplay.Jump.performed += ctx => jumpTriggered = true;
         controls.Gameplay.Fire.performed += ctx => Fire();
         controls.Gameplay.Emote.performed += ctx => Emote();
+
+        
     }
 
     void OnEnable() => controls.Gameplay.Enable();
@@ -37,19 +43,25 @@ public class PlayerControllerInput : MonoBehaviour
     void Start()
     {
         controller = GetComponent<CharacterController>();
+        animator = GetComponent<Animator>();
+
     }
 
     void Update()
     {
         HandleMovement();
         HandleJump();
+
+        if (controls.Gameplay.Move.ReadValue<Vector2>() != Vector2.zero)
+            animator.SetBool("Walking", true);
+        else
+            animator.SetBool("Walking", false);
     }
 
     void HandleMovement()
     {
         isGrounded = controller.isGrounded;
-        if (isGrounded && velocity.y < 0)
-            velocity.y = -2f;
+        if (isGrounded && velocity.y < 0) velocity.y = -2f;
 
         Vector3 move = cameraTransform.right * moveInput.x + cameraTransform.forward * moveInput.y;
         move.y = 0;
@@ -82,6 +94,7 @@ public class PlayerControllerInput : MonoBehaviour
     {
         Debug.Log("Disparo!");
         // Instancia un proyectil o animación
+        animator.SetTrigger("Shoot");
     }
 
     void Emote()
