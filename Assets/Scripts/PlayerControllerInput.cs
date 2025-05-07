@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -33,6 +34,8 @@ public class PlayerControllerInput : MonoBehaviour
         controls.Gameplay.Jump.performed += ctx => jumpTriggered = true;
         controls.Gameplay.Fire.performed += ctx => Fire();
         controls.Gameplay.Emote.performed += ctx => Emote();
+
+        
 
         
     }
