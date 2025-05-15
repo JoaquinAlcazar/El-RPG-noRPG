@@ -30,6 +30,9 @@ public class PlayerControllerInput : MonoBehaviour
     private Animator animator;
     private CharacterController characterController;
 
+    public GameObject bulletPrefab;
+    public Transform firePoint;
+
     private bool aiming = false;
 
     void Awake()
@@ -109,8 +112,16 @@ public class PlayerControllerInput : MonoBehaviour
     void Fire()
     {
         Debug.Log("Disparo!");
-        // Instancia un proyectil o animación
         animator.SetTrigger("Shoot");
+
+        if (bulletPrefab != null && firePoint != null)
+        {
+            Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+        }
+        else
+        {
+            Debug.LogWarning("Falta asignar el bulletPrefab o firePoint.");
+        }
     }
 
     void Emote()
