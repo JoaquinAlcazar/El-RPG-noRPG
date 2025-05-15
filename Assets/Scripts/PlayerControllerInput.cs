@@ -1,4 +1,7 @@
+using Cinemachine;
+using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -6,7 +9,10 @@ using UnityEngine.InputSystem;
 
 public class PlayerControllerInput : MonoBehaviour
 {
-    [SerializeField] private ThirdPersonCamera cameraScript;
+    //[SerializeField] private ThirdPersonCamera cameraScript;
+    [SerializeField] private CinemachineVirtualCamera emoteVCam;
+    [SerializeField] private CinemachineFreeLook normalVCam;
+    [SerializeField] private CinemachineVirtualCamera firstVCam;
 
     public float moveSpeed = 5f;
     public float jumpHeight = 2f;
@@ -24,8 +30,11 @@ public class PlayerControllerInput : MonoBehaviour
     private Animator animator;
     private CharacterController characterController;
 
+    private bool aiming = false;
+
     void Awake()
     {
+
         controls = new PlayerControls();
 
         controls.Gameplay.Move.performed += ctx => moveInput = ctx.ReadValue<Vector2>();
@@ -35,9 +44,9 @@ public class PlayerControllerInput : MonoBehaviour
         controls.Gameplay.Fire.performed += ctx => Fire();
         controls.Gameplay.Emote.performed += ctx => Emote();
 
-        
+        emoteVCam.Priority = 0;
 
-        
+
     }
 
     void OnEnable() => controls.Gameplay.Enable();
@@ -59,6 +68,9 @@ public class PlayerControllerInput : MonoBehaviour
             animator.SetBool("Walking", true);
         else
             animator.SetBool("Walking", false);
+
+        if (Input.GetMouseButton(1)) firstVCam.Priority = 20;
+        else firstVCam.Priority = 0;
     }
 
     void HandleMovement()
@@ -88,6 +100,7 @@ public class PlayerControllerInput : MonoBehaviour
     {
         if (jumpTriggered && isGrounded)
         {
+            StartCoroutine(jumpAnim());
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
         }
         jumpTriggered = false;
@@ -103,6 +116,29 @@ public class PlayerControllerInput : MonoBehaviour
     void Emote()
     {
         Debug.Log("¡Baile o emote activado!");
+        StartCoroutine(emoteCamera());
         // Reproduce animación de baile
+    }
+
+    public IEnumerator emoteCamera()
+    {
+        emoteVCam.Priority = 20;
+        firstVCam.Priority = 0;
+        normalVCam.Priority = 0;
+        animator.SetBool("Emoting", true);
+        animator.SetLayerWeight(2, 1);
+        yield return new WaitForSeconds(3f);
+        animator.SetLayerWeight(2, 0);
+        animator.SetBool("Emoting", false);
+        emoteVCam.Priority = 0;
+        firstVCam.Priority = 0;
+        normalVCam.Priority = 20;
+    }
+
+    public IEnumerator jumpAnim()
+    {
+        animator.SetBool("Jumping", true);
+        yield return new WaitForSeconds(1.2f);
+        animator.SetBool("Jumping", false);
     }
 }

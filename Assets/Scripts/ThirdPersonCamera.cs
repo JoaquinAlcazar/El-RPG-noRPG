@@ -34,19 +34,25 @@ public class ThirdPersonCamera : MonoBehaviour
 
             if (aiming)
             {
-                currentX = 0f;  
-                currentY = 0f;  
+                // Al entrar a primera persona
+                currentX = 0f;
+                currentY = 0f;
+            }
+            else
+            {
+                // Al salir de primera persona, resetear cámara
+                currentX = 0f;
+                currentY = 10f; // Puedes ajustar el valor inicial que quieras
+                currentOffset = thirdPersonOffset; // Reset inmediato
             }
         }
 
-        
-        if (!aiming) 
-        {
-            currentX += Input.GetAxis("Mouse X") * rotationSpeed;
-            currentY -= Input.GetAxis("Mouse Y") * rotationSpeed;
-            currentY = Mathf.Clamp(currentY, minY, maxY);
-        }
+        // Siempre actualizar rotación con el mouse
+        currentX += Input.GetAxis("Mouse X") * rotationSpeed;
+        currentY -= Input.GetAxis("Mouse Y") * rotationSpeed;
+        currentY = Mathf.Clamp(currentY, minY, maxY);
     }
+
 
     void LateUpdate()
     {
