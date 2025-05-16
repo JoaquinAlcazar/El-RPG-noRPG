@@ -972,7 +972,7 @@ MonoBehaviour:
     Value: 0.3
     m_SpeedMode: 0
     m_MaxSpeed: 100
-    m_AccelTime: 0.1
+    m_AccelTime: 0.5
     m_DecelTime: 0
     m_InputAxisName: Mouse Y
     m_InputAxisValue: 0
@@ -995,7 +995,7 @@ MonoBehaviour:
   m_XAxis:
     Value: 0
     m_SpeedMode: 0
-    m_MaxSpeed: 200
+    m_MaxSpeed: 500
     m_AccelTime: 0.1
     m_DecelTime: 0
     m_InputAxisName: Mouse X
@@ -1156,7 +1156,6 @@ GameObject:
   m_Component:
   - component: {fileID: 830168984}
   - component: {fileID: 830168983}
-  - component: {fileID: 830168982}
   - component: {fileID: 830168985}
   m_Layer: 0
   m_Name: MinimapCamera
@@ -1165,14 +1164,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &830168982
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 830168981}
-  m_Enabled: 1
 --- !u!20 &830168983
 Camera:
   m_ObjectHideFlags: 0
@@ -1232,12 +1223,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 830168981}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 534.54, y: 115.93, z: 221.56}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 20, z: 0}
+  m_LocalScale: {x: 1.0054193, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 669444564}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &830168985
 MonoBehaviour:
@@ -3272,6 +3263,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: X Bot
       objectReference: {fileID: 0}
+    - target: {fileID: 2500169258685051271, guid: abe42164ba9f2394dbb8cc7368cabcc0, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 7925639670546174971, guid: abe42164ba9f2394dbb8cc7368cabcc0, type: 3}
       propertyPath: m_LocalScale.x
       value: 1.7127407
@@ -3291,6 +3286,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2061370260882686601, guid: abe42164ba9f2394dbb8cc7368cabcc0, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1966462643}
+    - targetCorrespondingSourceObject: {fileID: 2061370260882686601, guid: abe42164ba9f2394dbb8cc7368cabcc0, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 830168984}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: abe42164ba9f2394dbb8cc7368cabcc0, type: 3}
 --- !u!1660057539 &9223372036854775807
@@ -3298,7 +3296,6 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 963194228}
-  - {fileID: 830168984}
   - {fileID: 705507995}
   - {fileID: 910056241}
   - {fileID: 6259603499059888876}

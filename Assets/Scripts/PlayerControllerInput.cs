@@ -35,6 +35,8 @@ public class PlayerControllerInput : MonoBehaviour
 
     private bool aiming = false;
 
+    public int HP = 100;
+
     void Awake()
     {
 
@@ -57,6 +59,8 @@ public class PlayerControllerInput : MonoBehaviour
 
     void Start()
     {
+        if (PlayerPrefs.HasKey("PlayerX") && PlayerPrefs.HasKey("PlayerY") && PlayerPrefs.HasKey("PlayerZ"))
+            transform.position = new Vector3(PlayerPrefs.GetFloat("PlayerX"), PlayerPrefs.GetFloat("PlayerY"), PlayerPrefs.GetFloat("PlayerZ"));
         controller = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
 
@@ -74,6 +78,8 @@ public class PlayerControllerInput : MonoBehaviour
 
         if (Input.GetMouseButton(1)) firstVCam.Priority = 20;
         else firstVCam.Priority = 0;
+
+        if (HP <=0 ) Destroy(gameObject);
     }
 
     void HandleMovement()
@@ -151,5 +157,12 @@ public class PlayerControllerInput : MonoBehaviour
         animator.SetBool("Jumping", true);
         yield return new WaitForSeconds(1.2f);
         animator.SetBool("Jumping", false);
+    }
+
+    public void OnApplicationQuit()
+    {
+        PlayerPrefs.SetFloat("PlayerX", transform.position.x);
+        PlayerPrefs.SetFloat("PlayerY", transform.position.y);
+        PlayerPrefs.SetFloat("PlayerZ", transform.position.z);
     }
 }
